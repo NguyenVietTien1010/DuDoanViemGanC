@@ -94,4 +94,3 @@ streamlit run demo.py
 ## 👤 Tác giả
 
 Nguyễn Viết Tiến  
-Dự án học phần: Ứng dụng Học Máy & Y học Dự phòng  
