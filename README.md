@@ -1,96 +1,97 @@
 
-# 🧠 Ứng dụng Học Máy – Dự đoán Hành Vi & Viêm Gan C
+# 🩺 Ứng dụng Dự đoán Viêm Gan C bằng Học Máy
 
-Dự án bao gồm **hai ứng dụng chính** sử dụng Streamlit kết hợp học máy và biểu diễn logic để:
-- 🤖 Dự đoán hành vi con người từ thời tiết và cảm xúc
-- 🩺 Dự đoán nguy cơ mắc Viêm Gan C dựa vào các chỉ số sinh hóa
+Ứng dụng web giúp dự đoán nguy cơ mắc **Viêm Gan C** dựa trên dữ liệu xét nghiệm sinh hóa. Giao diện xây dựng bằng **Streamlit**, sử dụng các mô hình học máy như **Random Forest** và **K-Nearest Neighbors (KNN)**.
 
 ---
 
-## 📁 Nội dung dự án
+## 📂 Nội dung dự án
 
-| Tên file       | Mô tả ngắn |
-|----------------|------------|
-| `main.py` / `main2.py` | Ứng dụng Trợ lý Logic hành vi (MLP + Logic biểu diễn) |
-| `demo.py`      | Ứng dụng dự đoán bệnh Viêm Gan C |
-| `data.csv`, `data2.csv` | Dữ liệu mô tả tình huống (main.py) |
-| `HepatitisCdata.csv` | Dữ liệu bệnh học (demo.py) |
-| `mlp_model.pth`, `losses.pkl` | Mô hình và log huấn luyện |
-| `requirements.txt` | Danh sách thư viện cần cài |
+| Tên file              | Mô tả                                                |
+|-----------------------|------------------------------------------------------|
+| `demo.py`             | Mã nguồn chính của ứng dụng Streamlit               |
+| `HepatitisCdata.csv`  | Dữ liệu y khoa gồm các chỉ số sinh hóa              |
+| `requirements.txt`    | Danh sách thư viện cần cài đặt                      |
 
 ---
 
 ## 🚀 Cách chạy ứng dụng
 
-### 1. Cài đặt thư viện
+### 1. Cài đặt thư viện cần thiết
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Chạy ứng dụng Trợ lý hành vi logic
-
-```bash
-streamlit run main.py
-# Hoặc bản có biểu đồ loss:
-streamlit run main2.py
-```
-
-### 3. Chạy ứng dụng Dự đoán Viêm Gan C
+### 2. Chạy ứng dụng
 
 ```bash
 streamlit run demo.py
 ```
 
-Truy cập tại `http://localhost:8501` trong trình duyệt.
+Ứng dụng sẽ hiển thị tại: `http://localhost:8501`
 
 ---
 
-## 🤖 Ứng dụng 1 – Trợ Lý Logic Hành Vi
+## 🧪 Dữ liệu và tiền xử lý
 
-- Huấn luyện MLP từ dữ liệu mô tả thời tiết & cảm xúc
-- Trích xuất đặc trưng logic: AND, OR, XOR
-- Dự đoán hành động (đi chơi, nghỉ ngơi) và giải thích theo biểu thức logic
-- Giao diện trực quan, có biểu đồ thống kê và Graphviz mô phỏng mạng nơ-ron
-
----
-
-## 🩺 Ứng dụng 2 – Dự đoán Viêm Gan C
-
-- Dữ liệu: `HepatitisCdata.csv` với >10 chỉ số sinh hóa
-- Tiền xử lý bằng StandardScaler, PCA, KMeans
-- Mô hình: KNN và Random Forest
-- Khai phá luật Apriori + giải thích y học
-- Phân tích chỉ số sinh hóa bằng biểu đồ Plotly
-- So sánh độ chính xác, precision, recall, F1-score
+- Dữ liệu từ file `HepatitisCdata.csv`
+- Gồm hơn 10 chỉ số sinh hóa: ALT, AST, GGT, BIL, ALB, ALP, CHE, CHOL, CREA, PROT...
+- Nhãn `Target`: 0 (không bệnh), 1 (có bệnh)
+- Tiền xử lý gồm: lọc dữ liệu, chuẩn hóa (StandardScaler), mã hóa giới tính, tạo biến `Flag_High_Risk`
 
 ---
 
-## 📊 Hiệu suất mô hình
+## 🧠 Mô hình học máy
 
-| Thuật toán       | Accuracy | Precision | Recall | F1-score |
-|------------------|----------|-----------|--------|----------|
-| Random Forest    | ~97%     | ~95%      | ~95%   | ~95%     |
-| KNN              | ~94%     | ~91%      | ~91%   | ~91%     |
-
----
-
-## 👨‍⚕️ Ý nghĩa chỉ số y khoa
-
-Ứng dụng cung cấp giải thích ngắn gọn từng chỉ số như ALT, AST, GGT, BIL, ALB… để người dùng hiểu rõ hơn về tình trạng gan của mình.
+- **Random Forest** (100 cây, trọng số cân bằng)
+- **KNN** (k=5, khoảng cách có trọng số)
+- Đánh giá hiệu suất bằng: Accuracy, Precision, Recall, F1-score
 
 ---
 
-## 📌 Mục tiêu
+## 🔍 Khai phá luật Apriori
 
-- Minh họa kết hợp giữa AI + logic + y học
-- Dễ triển khai, giao diện đẹp, tiếng Việt đầy đủ
-- Phù hợp cho sinh viên học các môn ML, NLP, AI y tế
+- Trích xuất các tập phổ biến và luật kết hợp từ dữ liệu
+- Hiển thị bảng luật và giải thích y học cho từng chỉ số liên quan
+
+---
+
+## 📊 Trực quan hóa
+
+- Biểu đồ **PCA + KMeans** để phân cụm bệnh nhân
+- Biểu đồ **Histogram** và **Boxplot** so sánh các chỉ số sinh hóa giữa hai nhóm
+- Bảng **so sánh mô hình** dựa trên các chỉ số hiệu suất
+
+---
+
+## 🧬 Dự đoán cá nhân hóa
+
+- Nhập dữ liệu xét nghiệm theo form
+- Dự đoán kết quả có/không mắc bệnh
+- Phân tích xác suất, lý do theo luật Apriori
+- So sánh chỉ số người dùng với ngưỡng bình thường
+
+---
+
+## 📈 Hiệu suất mô hình
+
+| Mô hình         | Accuracy | Precision | Recall | F1-score |
+|-----------------|----------|-----------|--------|----------|
+| Random Forest   | ~97%     | ~95%      | ~95%   | ~95%     |
+| KNN             | ~94%     | ~91%      | ~91%   | ~91%     |
+
+---
+
+## 🧑‍⚕️ Ứng dụng dành cho
+
+- Sinh viên học ngành Y – Dược – Khoa học dữ liệu
+- Các bài toán AI trong y tế
+- Người dân muốn hiểu về nguy cơ gan và theo dõi sức khỏe
 
 ---
 
 ## 👤 Tác giả
 
-Nguyễn Viết Tiến – Đồ án học phần Khoa học Dữ liệu  
-Hướng dẫn sử dụng, tài liệu chi tiết có trong mỗi ứng dụng.
-
+Nguyễn Viết Tiến  
+Dự án học phần: Ứng dụng Học Máy & Y học Dự phòng  
